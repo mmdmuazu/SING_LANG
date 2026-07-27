@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Live Voice Transcriber",
+  "version": "1.1.0",
+  "description": "Capture live speech from your microphone and stream a smooth, live transcript in the side panel.",
+  "permissions": ["storage", "sidePanel"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Open Live Transcriber"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Transcriber</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Sing Lang</p>
+          <h1>Live Transcriber</h1>
+        </div>
+        <div class="header-actions">
+          <button id="helpBtn" class="icon-btn" title="Show setup tour" aria-label="Show setup tour">?</button>
+          <div id="statusBadge" class="status-pill">Idle</div>
+        </div>
+      </header>
+
+      <section class="panel-card">
+        <p class="description">
+          Start listening to capture your microphone audio and stream a live transcript into this panel.
+        </p>
+
+        <div class="controls">
+          <button id="startBtn" class="primary">Start Listening</button>
+          <button id="stopBtn" class="secondary" disabled>Stop Listening</button>
+          <button id="copyBtn" class="ghost">Copy Text</button>
+          <button id="clearBtn" class="ghost">Clear</button>
+        </div>
+
+        <div class="avatar-panel">
+          <div class="g-avatar-container" id="g-avatar-frame">
+            <svg class="g-avatar-figure" viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <defs>
+                <radialGradient id="skinGrad" cx="35%" cy="30%" r="75%">
+                  <stop offset="0%" stop-color="#ffe3c2" />
+                  <stop offset="100%" stop-color="#eeb488" />
+                </radialGradient>
+                <linearGradient id="shirtGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#5cd0ff" />
+                  <stop offset="100%" stop-color="#0284c7" />
+                </linearGradient>
+                <radialGradient id="glowGrad" cx="50%" cy="45%" r="55%">
+                  <stop offset="0%" stop-color="rgba(56,189,248,0.32)" />
+                  <stop offset="100%" stop-color="rgba(56,189,248,0)" />
+                </radialGradient>
+                <linearGradient id="hairGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4b3524" />
+                  <stop offset="100%" stop-color="#2c1d13" />
+                </linearGradient>
+              </defs>
+
+              <circle class="g-avatar-glow" cx="100" cy="110" r="98" fill="url(#glowGrad)" />
+
+              <!-- torso -->
+              <path class="g-avatar-torso" d="M50 228 Q48 148 100 146 Q152 148 150 228 Z" fill="url(#shirtGrad)" />
+              <path class="g-avatar-collar" d="M84 150 Q100 168 116 150 L110 146 Q100 154 90 146 Z" fill="#e7f7ff" opacity="0.55" />
+
+              <!-- arms -->
+              <g class="g-avatar-arm g-avatar-arm-left">
+                <path d="M62 156 Q34 172 27 206" stroke="url(#shirtGrad)" stroke-width="20" stroke-linecap="round" fill="none" />
+                <circle class="g-avatar-hand" cx="26" cy="210" r="13" fill="url(#skinGrad)" />
+              </g>
+              <g class="g-avatar-arm g-avatar-arm-right">
+                <path d="M138 156 Q166 172 173 206" stroke="url(#shirtGrad)" stroke-width="20" stroke-linecap="round" fill="none" />
+                <circle class="g-avatar-hand" cx="174" cy="210" r="13" fill="url(#skinGrad)" />
+              </g>
+
+              <!-- neck -->
+              <rect x="86" y="90" width="28" height="30" rx="9" fill="#e8ad7c" />
+
+              <!-- head -->
+              <g class="g-avatar-head-group">
+                <circle cx="100" cy="66" r="50" fill="url(#skinGrad)" />
+                <path class="g-avatar-ear g-avatar-ear-left" d="M52 60 a8 10 0 1 0 0 20 Z" fill="#e8ad7c" />
+                <path class="g-avatar-ear g-avatar-ear-right" d="M148 60 a8 10 0 1 1 0 20 Z" fill="#e8ad7c" />
+                <path d="M48 56 Q52 6 100 4 Q148 6 152 56 Q140 26 100 22 Q60 26 48 56 Z" fill="url(#hairGrad)" />
+                <g class="g-avatar-eye g-avatar-eye-left">
+                  <ellipse cx="80" cy="66" rx="5.5" ry="6.5" fill="#1f2937" />
+                  <circle cx="82" cy="63.5" r="1.4" fill="#f8fafc" />
+                </g>
+                <g class="g-avatar-eye g-avatar-eye-right">
+                  <ellipse cx="120" cy="66" rx="5.5" ry="6.5" fill="#1f2937" />
+                  <circle cx="122" cy="63.5" r="1.4" fill="#f8fafc" />
+                </g>
+                <path class="g-avatar-brow g-avatar-brow-left" d="M72 54 Q80 49 89 53" stroke="#3b2a1c" stroke-width="2.6" fill="none" stroke-linecap="round" />
+                <path class="g-avatar-brow g-avatar-brow-right" d="M111 53 Q120 49 128 54" stroke="#3b2a1c" stroke-width="2.6" fill="none" stroke-linecap="round" />
+                <path d="M92 78 Q100 84 108 78" stroke="#d99b6c" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6" />
+                <g class="g-avatar-mouth-wrap">
+                  <path class="g-avatar-mouth" d="M82 90 Q100 100 118 90" stroke="#8a4f36" stroke-width="4" fill="none" stroke-linecap="round" />
+                </g>
+              </g>
+            </svg>
+            <div class="g-avatar-status" id="g-avatar-status">Ready to sign</div>
+          </div>
+        </div>
+
+        <div class="transcript-panel">
+          <div class="transcript-header">
+            <span>Live transcription</span>
+            <span id="liveIndicator">● Waiting</span>
+          </div>
+          <div id="transcriptBox" class="transcript-box" aria-live="polite"></div>
+        </div>
+      </section>
+    </div>
+
+    <div id="tourOverlay" class="tour-overlay" hidden>
+      <div class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tourTitle">
+        <div class="tour-progress" aria-hidden="true">
+          <span class="tour-dot" data-step="0"></span>
+          <span class="tour-dot" data-step="1"></span>
+          <span class="tour-dot" data-step="2"></span>
+        </div>
+
+        <div class="tour-step" data-step="0">
+          <h2 id="tourTitle">Welcome to Live Transcriber</h2>
+          <p>This extension turns your microphone into a live, on-screen transcript. Let's get you set up — it only takes two quick steps.</p>
+        </div>
+
+        <div class="tour-step" data-step="1" hidden>
+          <h2>Enable your microphone</h2>
+          <p>Live Transcriber needs microphone access to work. Click below to grant permission. If access was previously blocked, this will take you straight to your browser's settings to turn it back on.</p>
+          <button id="enableMicBtn" class="primary tour-action">Enable Microphone</button>
+          <p id="micStatus" class="tour-hint" role="status"></p>
+        </div>
+
+        <div class="tour-step" data-step="2" hidden>
+          <h2>You're all set</h2>
+          <p>Press <strong>Start Listening</strong> any time to begin transcribing. New lines flow in smoothly and older lines scroll up as the panel fills — nothing is ever swapped out abruptly.</p>
+          <p class="tour-hint">You can reopen this tour anytime from the "?" button in the header.</p>
+        </div>
+
+        <div class="tour-nav">
+          <button id="tourSkipBtn" class="ghost">Skip</button>
+          <button id="tourNextBtn" class="primary">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>

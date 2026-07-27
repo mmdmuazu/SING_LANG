@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Transcriber</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Sing Lang</p>
+          <h1>Live Transcriber</h1>
+        </div>
+        <div class="header-actions">
+          <button
+            id="helpBtn"
+            class="icon-btn"
+            title="Show setup tour"
+            aria-label="Show setup tour"
+          >
+            ?
+          </button>
+          <div id="statusBadge" class="status-pill">Idle</div>
+        </div>
+      </header>
+
+      <section class="panel-card">
+        <p class="description">
+          Start listening to capture your microphone audio and stream a live
+          transcript into this panel.
+        </p>
+
+        <div class="controls">
+          <button id="startBtn" class="primary">Start Listening</button>
+          <button id="stopBtn" class="secondary" disabled>
+            Stop Listening
+          </button>
+          <button id="copyBtn" class="ghost">Copy Text</button>
+          <button id="clearBtn" class="ghost">Clear</button>
+        </div>
+
+        <div class="avatar-panel">
+          <div class="g-avatar-container" id="g-avatar-frame">
+            <div class="g-avatar-3d-box">
+              <div class="g-avatar-head"></div>
+              <div class="g-avatar-body"></div>
+              <div class="g-avatar-hand left"></div>
+              <div class="g-avatar-hand right"></div>
+            </div>
+            <div class="g-avatar-status" id="g-avatar-status">
+              Ready to sign
+            </div>
+          </div>
+        </div>
+
+        <div class="transcript-panel">
+          <div class="transcript-header">
+            <span>Live transcription</span>
+            <span id="liveIndicator">● Waiting</span>
+          </div>
+          <div
+            id="transcriptBox"
+            class="transcript-box"
+            aria-live="polite"
+          ></div>
+        </div>
+      </section>
+    </div>
+
+    <div id="tourOverlay" class="tour-overlay" hidden>
+      <div
+        class="tour-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tourTitle"
+      >
+        <div class="tour-progress" aria-hidden="true">
+          <span class="tour-dot" data-step="0"></span>
+          <span class="tour-dot" data-step="1"></span>
+          <span class="tour-dot" data-step="2"></span>
+        </div>
+
+        <div class="tour-step" data-step="0">
+          <h2 id="tourTitle">Welcome to Live Transcriber</h2>
+          <p>
+            This extension turns your microphone into a live, on-screen
+            transcript. Let's get you set up — it only takes two quick steps.
+          </p>
+        </div>
+
+        <div class="tour-step" data-step="1" hidden>
+          <h2>Enable your microphone</h2>
+          <p>
+            Live Transcriber needs microphone access to work. Click below to
+            grant permission — your browser will show a one-time prompt.
+          </p>
+          <button id="enableMicBtn" class="primary tour-action">
+            Enable Microphone
+          </button>
+          <p id="micStatus" class="tour-hint" role="status"></p>
+        </div>
+
+        <div class="tour-step" data-step="2" hidden>
+          <h2>You're all set</h2>
+          <p>
+            Press <strong>Start Listening</strong> any time to begin
+            transcribing. New lines flow in smoothly and older lines scroll up
+            as the panel fills — nothing is ever swapped out abruptly.
+          </p>
+          <p class="tour-hint">
+            You can reopen this tour anytime from the "?" button in the header.
+          </p>
+        </div>
+
+        <div class="tour-nav">
+          <button id="tourSkipBtn" class="ghost">Skip</button>
+          <button id="tourNextBtn" class="primary">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>
